@@ -1,13 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterFragment">
+    android:scrollbars="none">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Register Fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/logo"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/notly"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/SignupTitle"
+            android:layout_marginTop="30dp"
+            android:text="Sign Up"
+            style="@style/TextStyle.h1"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:inputType="text"
+            android:layout_marginTop="30dp"
+            android:hint="@string/txt_username"
+            style="@style/TextStyle.h4"
+            android:background="@drawable/rounded_border_selector"
+            android:id="@+id/username_et"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="20dp"
+            android:hint="@string/txt_email"
+            style="@style/TextStyle.h4"
+            android:background="@drawable/rounded_border_selector"
+            android:id="@+id/email_et"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword"
+            android:hint="@string/txt_password"
+            style="@style/TextStyle.h4"
+            android:background="@drawable/rounded_border_selector"
+            android:id="@+id/password_et"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/PrimaryButton"
+            android:id="@+id/signUpBtn"
+            android:layout_marginTop="20dp"
+            android:text="Sign Up"/>
+
+    </LinearLayout>
+
+</ScrollView>
