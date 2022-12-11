@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/registerFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="io.notly.android.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_notesListingFragment"
+            app:destination="@id/notesListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="io.notly.android.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_notesListingFragment"
+            app:destination="@id/notesListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notesListingFragment"
+        android:name="io.notly.android.NotesListingFragment"
+        android:label="fragment_notes_listing"
+        tools:layout="@layout/fragment_notes_listing" >
+        <action
+            android:id="@+id/action_notesListingFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="io.notly.android.EditNoteFragment"
+        android:label="fragment_edit_note"
+        tools:layout="@layout/fragment_edit_note" />
+</navigation>
