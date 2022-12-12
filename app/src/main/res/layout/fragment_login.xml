@@ -19,6 +19,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="center"
                 android:src="@drawable/notly" />
 
             <TextView
@@ -81,7 +82,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/signUpBtn"
+            android:id="@+id/signInBtn"
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

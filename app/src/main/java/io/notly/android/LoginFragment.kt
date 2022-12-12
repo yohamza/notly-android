@@ -24,6 +24,10 @@ class LoginFragment : Fragment() {
                 findNavController().popBackStack()
         }
 
+        binding.signInBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_notesListingFragment)
+        }
+
         return binding.root
     }
 }
