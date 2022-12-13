@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/screenBackground</item>
         <item name="colorOnPrimary">@color/text_black</item>
-        <item name="colorAccent">@color/screenBackground</item>
+        <item name="colorAccent">@color/black</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowLightStatusBar">true</item>
