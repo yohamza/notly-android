@@ -17,22 +17,22 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/notly" />
 
             <TextView
                 android:id="@+id/logo"
-                style="@style/TextStyle.h2"
+                style="@style/TextStyle.h3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="Notly" />
 
             <ProgressBar
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/progress"
                 android:visibility="gone"
@@ -42,52 +42,55 @@
 
         <TextView
             android:id="@+id/SignupTitle"
-            style="@style/TextStyle.h1"
+            style="@style/TextStyle.h2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Create Your Notly\nAccount." />
+            android:layout_marginTop="20dp"
+            android:text="Create Your Account" />
 
         <EditText
             android:id="@+id/username_et"
-            style="@style/TextStyle.h4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/rounded_border_selector"
-            android:hint="@string/txt_username"
-            android:inputType="text"
-            android:padding="15dp" />
-
-        <EditText
-            android:id="@+id/email_et"
-            style="@style/TextStyle.h4"
+            style="@style/TextStyle.h6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:maxLines="1"
+            android:background="@drawable/rounded_border_selector"
+            android:hint="@string/txt_username"
+            android:inputType="text"
+            android:padding="@dimen/edit_text_padding" />
+
+        <EditText
+            android:id="@+id/email_et"
+            style="@style/TextStyle.h6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
             android:background="@drawable/rounded_border_selector"
             android:hint="@string/txt_email"
             android:inputType="textEmailAddress"
-            android:padding="15dp" />
+            android:padding="@dimen/edit_text_padding" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:weightSum="2"
             android:background="@drawable/rounded_border_selector"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/password_et"
-                style="@style/TextStyle.h4"
+                style="@style/TextStyle.h6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txt_password"
+                android:maxLines="1"
                 android:background="@null"
                 android:layout_weight="2"
                 android:inputType="textPassword"
-                android:padding="15dp" />
+                android:padding="@dimen/edit_text_padding" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -118,13 +121,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextStyle.h4"
+                style="@style/TextStyle.h6"
                 android:text="Already have an account?" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextStyle.h3"
+                style="@style/TextStyle.h5"
                 android:padding="5dp"
                 android:id="@+id/goToSignin"
                 android:layout_marginStart="5dp"

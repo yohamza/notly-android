@@ -14,12 +14,16 @@ import io.notly.android.databinding.FragmentRegisterBinding
 import io.notly.android.models.UserRequest
 import io.notly.android.utils.*
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
     private val authViewModel: AuthViewModel by viewModels()
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +33,11 @@ class RegisterFragment : Fragment() {
 
         binding.goToSignin.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
+
+        //TODO: Implement this code on a splash screen
+        if(tokenManager.geToken() != null){
+            findNavController().navigate(R.id.action_registerFragment_to_notesListingFragment)
         }
 
         binding.signUpBtn.setOnClickListener {
@@ -64,7 +73,7 @@ class RegisterFragment : Fragment() {
 
             when(it){
                 is NetworkResult.Success -> {
-                    //TODO: Save Token Implementation
+                    tokenManager.saveToken(it.data!!.token)
                     findNavController().navigate(R.id.action_registerFragment_to_notesListingFragment)
                 }
                 is NetworkResult.Error -> {

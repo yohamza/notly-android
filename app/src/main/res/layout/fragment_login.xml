@@ -42,41 +42,43 @@
 
         <TextView
             android:id="@+id/SignupTitle"
-            style="@style/TextStyle.h1"
+            style="@style/TextStyle.h2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="Welcome Back 🥺" />
 
         <EditText
             android:id="@+id/email_et"
-            style="@style/TextStyle.h4"
+            style="@style/TextStyle.h6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_border_selector"
             android:hint="@string/txt_email"
+            android:maxLines="1"
             android:inputType="textEmailAddress"
-            android:padding="15dp" />
+            android:padding="@dimen/edit_text_padding" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:weightSum="2"
             android:background="@drawable/rounded_border_selector"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/password_et"
-                style="@style/TextStyle.h4"
+                style="@style/TextStyle.h6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txt_password"
                 android:background="@null"
+                android:maxLines="1"
                 android:layout_weight="2"
                 android:inputType="textPassword"
-                android:padding="15dp" />
+                android:padding="@dimen/edit_text_padding" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -107,13 +109,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextStyle.h4"
+                style="@style/TextStyle.h6"
                 android:text="Don\'t have an account?" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextStyle.h3"
+                style="@style/TextStyle.h5"
                 android:padding="5dp"
                 android:id="@+id/goToSignup"
                 android:layout_marginStart="5dp"

@@ -29,25 +29,35 @@
 
     <style name="TextStyle.h2" parent="BaseTextView">
         <item name="fontFamily">@font/poppins_semibold</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">26sp</item>
     </style>
 
     <style name="TextStyle.h3" parent="BaseTextView">
         <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="TextStyle.h4" parent="BaseTextView">
         <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextStyle.h5" parent="BaseTextView">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextStyle.h6" parent="BaseTextView">
+        <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextStyle.readexThin" parent="BaseTextView">
+    <style name="TextStyle.poppinsThin" parent="BaseTextView">
         <item name="fontFamily">@font/poppins_light</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextStyle.readexRegular" parent="BaseTextView">
+    <style name="TextStyle.poppinsRegular" parent="BaseTextView">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">16sp</item>
     </style>
@@ -65,11 +75,11 @@
     <style name="PrimaryButton" parent="@android:style/Widget.Button">
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/white</item>
         <item name="textAllCaps">true</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">@dimen/button_padding</item>
+        <item name="android:paddingBottom">@dimen/button_padding</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:background">@drawable/primary_button</item>
         <item name="android:focusable">true</item>
@@ -83,11 +93,11 @@
     <style name="SecondaryButton" parent="@android:style/Widget.Button">
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="textAllCaps">true</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">@dimen/button_padding</item>
+        <item name="android:paddingBottom">@dimen/button_padding</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:background">@drawable/secondary_button</item>
         <item name="android:focusable">true</item>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/note_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is title note"
+        style="@style/TextStyle.h4"
+        android:textColor="@color/white"
+        android:id="@+id/title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is note description. This is a very detailed description about note and your tasks that you\'re required to do and you need to this to achieve something in life"
+        style="@style/TextStyle.body2"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:layout_below="@id/title"
+        android:textColor="@color/white"
+        android:id="@+id/description"/>
+
+</RelativeLayout>

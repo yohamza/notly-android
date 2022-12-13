@@ -13,12 +13,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.notly.android.databinding.FragmentLoginBinding
 import io.notly.android.models.UserRequest
 import io.notly.android.utils.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val authViewModel: AuthViewModel by viewModels()
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +67,7 @@ class LoginFragment : Fragment() {
 
             when(it){
                 is NetworkResult.Success -> {
-                    //TODO: Save Token Implementation
+                    tokenManager.saveToken(it.data!!.token)
                     findNavController().navigate(R.id.action_loginFragment_to_notesListingFragment)
                 }
                 is NetworkResult.Error -> {
