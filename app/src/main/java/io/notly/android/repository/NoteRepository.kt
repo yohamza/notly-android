@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import io.notly.android.api.NotesAPI
 import io.notly.android.models.Note
 import io.notly.android.models.NoteResponse
+import io.notly.android.models.NotesListResponse
 import io.notly.android.utils.Constants.STANDARD_ERROR
 import io.notly.android.utils.NetworkResult
 import io.notly.android.utils.NetworkResult.*
@@ -15,8 +16,8 @@ import javax.inject.Inject
 
 class NoteRepository @Inject constructor(private val notesAPI: NotesAPI) {
 
-    private val _notesListLiveData = MutableLiveData<NetworkResult<List<NoteResponse>>>()
-    val notesListLiveData: LiveData<NetworkResult<List<NoteResponse>>>
+    private val _notesListLiveData = MutableLiveData<NetworkResult<NotesListResponse>>()
+    val notesListLiveData: LiveData<NetworkResult<NotesListResponse>>
     get() = _notesListLiveData
 
     private val _statusLiveData = MutableLiveData<NetworkResult<String>>()

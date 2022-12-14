@@ -2,13 +2,14 @@ package io.notly.android.api
 
 import io.notly.android.models.Note
 import io.notly.android.models.NoteResponse
+import io.notly.android.models.NotesListResponse
 import retrofit2.Response
 import retrofit2.http.*
 
 interface NotesAPI {
 
     @GET("/notes")
-    suspend fun getNotes() : Response<List<NoteResponse>>
+    suspend fun getNotes() : Response<NotesListResponse>
 
     @GET("/notes/{id}")
     suspend fun getNoteById(@Path("id") id: Int) : Response<NoteResponse>

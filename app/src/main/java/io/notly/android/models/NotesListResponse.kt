@@ -2,8 +2,8 @@ package io.notly.android.models
 
 import com.google.gson.annotations.SerializedName
 
-data class NoteResponse(
+data class NotesListResponse(
     val message: String? = null,
     @SerializedName("data")
-    val note: Note? = null
+    val notesList: List<Note>? = null
 )

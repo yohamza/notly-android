@@ -17,25 +17,26 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/notly" />
 
             <TextView
                 android:id="@+id/logo"
-                style="@style/TextStyle.h2"
+                style="@style/TextStyle.h3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="Notly" />
 
             <ProgressBar
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/progress"
                 android:visibility="gone"
+                android:layout_gravity="center"
                 android:indeterminateTint="@color/colorPrimary"/>
 
         </LinearLayout>
@@ -115,7 +116,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextStyle.h5"
+                style="@style/TextStyle.h6"
                 android:padding="5dp"
                 android:id="@+id/goToSignup"
                 android:layout_marginStart="5dp"

@@ -9,8 +9,8 @@ import okhttp3.ResponseBody
 import org.json.JSONObject
 
 
-fun View.snack(message: String, length: Int = Snackbar.LENGTH_SHORT) {
-    val snack = Snackbar.make(this, message, length)
+fun View.snack(message: String?, length: Int = Snackbar.LENGTH_SHORT) {
+    val snack = Snackbar.make(this, message ?: "Oops something went wrong", length)
     snack.show()
 }
 

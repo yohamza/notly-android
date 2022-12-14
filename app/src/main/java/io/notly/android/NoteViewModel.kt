@@ -19,37 +19,37 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
     val statusLiveData get() = noteRepository.statusLiveData
     val noteLiveData get() = noteRepository.noteLiveData
 
-    suspend fun getNotes(){
+    fun getNotes(){
         viewModelScope.launch {
             noteRepository.getNotes()
         }
     }
 
-    suspend fun getNoteById(id: Int){
+    fun getNoteById(id: Int){
         viewModelScope.launch {
             noteRepository.getNoteById(id)
         }
     }
 
-    suspend fun createNote(note: Note){
+    fun createNote(note: Note){
         viewModelScope.launch {
             noteRepository.createNote(note)
         }
     }
 
-    suspend fun editNote(id: Int, note: Note){
+    fun editNote(id: Int, note: Note){
         viewModelScope.launch {
             noteRepository.editNote(id, note)
         }
     }
 
-    suspend fun deleteAllNotes(){
+    fun deleteAllNotes(){
         viewModelScope.launch {
             noteRepository.deleteAllNotes()
         }
     }
 
-    suspend fun deleteNoteById(id: Int){
+    fun deleteNoteById(id: Int){
         viewModelScope.launch {
             noteRepository.deleteNoteById(id)
         }

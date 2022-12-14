@@ -11,6 +11,8 @@
     <color name="text_black">#212427</color>
     <color name="highlight_text_color">#2196F3</color>
     <color name="colorPrimary">#004aad</color>
+    <color name="lightBlue">#D1DEFF</color>
+    <color name="textBlue">#193680</color>
     <color name="cancel_red">#D40A0A</color>
     <color name="screenBackground">#ffffff</color>
 </resources>

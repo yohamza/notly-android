@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="15dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/heading"
+        style="@style/TextStyle.h2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorPrimary"
+        android:text="Add Note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/deleteNoteBtn"
+        android:src="@drawable/ic_delete"
+        android:padding="5dp"
+        app:tint="@color/cancel_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/heading"
+        app:layout_constraintBottom_toBottomOf="@id/heading"/>
+
+    <EditText
+        android:id="@+id/title_et"
+        style="@style/TextStyle.h4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:hint="Title"
+        app:layout_constraintStart_toStartOf="@id/heading"
+        app:layout_constraintTop_toBottomOf="@id/heading" />
+
+    <EditText
+        android:id="@+id/description_et"
+        style="@style/TextStyle.poppinsRegular"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="Description"
+        app:layout_constraintBottom_toTopOf="@id/saveBtn"
+        app:layout_constraintStart_toStartOf="@id/title_et"
+        app:layout_constraintTop_toBottomOf="@id/title_et" />
+
+    <Button
+        android:id="@+id/saveBtn"
+        style="@style/PrimaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Save"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,12 +36,12 @@
         android:label="fragment_notes_listing"
         tools:layout="@layout/fragment_notes_listing" >
         <action
-            android:id="@+id/action_notesListingFragment_to_editNoteFragment"
-            app:destination="@id/editNoteFragment" />
+            android:id="@+id/action_notesListingFragment_to_addEditNoteFragment"
+            app:destination="@id/addEditNoteFragment" />
     </fragment>
     <fragment
-        android:id="@+id/editNoteFragment"
-        android:name="io.notly.android.EditNoteFragment"
-        android:label="fragment_edit_note"
-        tools:layout="@layout/fragment_edit_note" />
+        android:id="@+id/addEditNoteFragment"
+        android:name="io.notly.android.AddEditNoteFragment"
+        android:label="fragment_add_edit_note"
+        tools:layout="@layout/fragment_add_edit_note" />
 </navigation>
