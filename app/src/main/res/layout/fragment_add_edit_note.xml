@@ -14,10 +14,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/ic_back"
+        app:drawableTint="@color/colorPrimary"
+        android:drawablePadding="5dp"
         android:textColor="@color/colorPrimary"
         android:text="Add Note"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/progress"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
         android:layout_width="32dp"

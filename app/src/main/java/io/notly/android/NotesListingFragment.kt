@@ -1,10 +1,12 @@
 package io.notly.android
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import io.notly.android.databinding.FragmentNotesListingBinding
 import io.notly.android.models.Note
 import io.notly.android.models.NoteResponse
 import io.notly.android.utils.*
+import io.notly.android.utils.Constants.TAG
 import io.notly.android.utils.NetworkResult.*
 
 @AndroidEntryPoint
@@ -24,6 +27,17 @@ class NotesListingFragment : Fragment(), NotesAdapter.NoteClickListener {
     private val notesViewModel: NoteViewModel by viewModels()
     private lateinit var notesAdapter: NotesAdapter
     private var notesList = mutableListOf<Note>()
+    private var selectedNotePosition = -1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setFragmentResultListener("note_added") { requestKey, bundle ->
+            val note: Note = Gson().fromJson(bundle.getString(Constants.NOTE), Note::class.java)
+            notesList.add(note)
+            notesAdapter.notifyItemInserted(notesList.size-1)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,11 +94,35 @@ class NotesListingFragment : Fragment(), NotesAdapter.NoteClickListener {
             }
 
         }
+
+//        //Observe if note was added, updated or deleted
+//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("note_added")
+//            ?.observe(viewLifecycleOwner) {
+////                Log.d(TAG, "noted added with title: ${it.title}")
+//                Log.d(TAG, "noted added with title:")
+//            }
+//
+//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("note_updated")
+//            ?.observe(viewLifecycleOwner) {
+////                Log.d(TAG, "noted updated with title: ${it.title}")
+//                Log.d(TAG, "noted updated with title: ")
+//            }
+//
+//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("note_deleted")
+//            ?.observe(viewLifecycleOwner) {
+////                Log.d(TAG, "note deleted $it")
+//                Log.d(TAG, "note deleted ")
+////                if(selectedNotePosition>-1){
+////                    notesList.removeAt(selectedNotePosition)
+////                    notesAdapter.notifyItemRemoved(selectedNotePosition)
+////                }
+//            }
     }
 
-    override fun onNoteClicked(note: Note) {
+    override fun onNoteClicked(position: Int) {
         val bundle = Bundle()
-        bundle.putString(Constants.NOTE, Gson().toJson(note))
+        selectedNotePosition = position
+        bundle.putString(Constants.NOTE, Gson().toJson(notesList[position]))
         findNavController().navigate(R.id.action_notesListingFragment_to_addEditNoteFragment, bundle)
     }
 }
