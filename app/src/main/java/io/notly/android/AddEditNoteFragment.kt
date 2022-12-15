@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.notly.android.databinding.FragmentAddEditNoteBinding
 import io.notly.android.models.Note
+import io.notly.android.models.NoteRequest
 import io.notly.android.utils.*
 import io.notly.android.utils.NetworkResult.*
 
@@ -43,14 +44,21 @@ class AddEditNoteFragment : Fragment() {
         }
 
         binding.deleteNoteBtn.setOnClickListener {
-            //TODO: Implement Deletion
+            note?.let {
+                noteViewModel.deleteNoteById(it._id)
+            }
         }
 
         binding.saveBtn.setOnClickListener {
-//            val navController = findNavController()
-//            val key = if(isAdd) "note_added" else "note_updated"
-//            navController.previousBackStackEntry?.savedStateHandle?.set(key, Gson().toJson(note))
-//            navController.popBackStack()
+            val title = binding.titleEt.text.toString().trim()
+            val description = binding.descriptionEt.text.toString().trim()
+            val noteRequest = NoteRequest(title, description)
+            if(isAdd){
+                noteViewModel.createNote(noteRequest)
+            }
+            else{
+                noteViewModel.updateNote(note!!._id, noteRequest)
+            }
         }
 
     }
@@ -61,9 +69,8 @@ class AddEditNoteFragment : Fragment() {
             binding.progress.hide()
             when (it) {
                 is Success -> {
-//                    val navController = findNavController()
-//                    navController.previousBackStackEntry?.savedStateHandle?.set("note_deleted", "Note ${note!!._id} deleted successfully")
-//                    navController.popBackStack()
+                    //TODO: Implement persistence logic for delete
+                    findNavController().popBackStack()
                 }
                 is Loading -> {
                     binding.progress.show()
@@ -78,10 +85,8 @@ class AddEditNoteFragment : Fragment() {
             binding.progress.hide()
             when (it) {
                 is Success -> {
-//                    val navController = findNavController()
-//                    val key = if(isAdd) "note_added" else "note_updated"
-//                    navController.previousBackStackEntry?.savedStateHandle?.set(key, note)
-//                    navController.popBackStack()
+                    //TODO: Implement persistence logic for add/update
+                    findNavController().popBackStack()
                 }
                 is Loading -> {
                     binding.progress.show()

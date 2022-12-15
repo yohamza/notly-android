@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.notly.android.api.NotesAPI
 import io.notly.android.models.Note
+import io.notly.android.models.NoteRequest
 import io.notly.android.models.NoteResponse
 import io.notly.android.models.NotesListResponse
 import io.notly.android.utils.Constants.STANDARD_ERROR
@@ -49,7 +50,7 @@ class NoteRepository @Inject constructor(private val notesAPI: NotesAPI) {
 
     }
 
-    suspend fun getNoteById(id: Int){
+    suspend fun getNoteById(id: String){
         _noteLiveData.postValue(Loading())
 
         try {
@@ -70,7 +71,7 @@ class NoteRepository @Inject constructor(private val notesAPI: NotesAPI) {
         }
     }
 
-    suspend fun createNote(note: Note){
+    suspend fun createNote(note: NoteRequest){
         _noteLiveData.postValue(Loading())
 
         try {
@@ -91,7 +92,7 @@ class NoteRepository @Inject constructor(private val notesAPI: NotesAPI) {
         }
     }
 
-    suspend fun editNote(id: Int, note: Note){
+    suspend fun updateNote(id: String, note: NoteRequest){
         _noteLiveData.postValue(Loading())
 
         try {
@@ -112,28 +113,7 @@ class NoteRepository @Inject constructor(private val notesAPI: NotesAPI) {
         }
     }
 
-    suspend fun deleteAllNotes(){
-        _statusLiveData.postValue(Loading())
-
-        try {
-            val response = notesAPI.deleteAllNotes()
-
-            if(response.isSuccessful){
-                _statusLiveData.postValue(Success("All Notes Deleted"))
-            }
-            else if(response.errorBody() != null){
-                _statusLiveData.postValue(Error("Something went wrong"))
-            }
-            else{
-                _statusLiveData.postValue(Error("Something went wrong"))
-            }
-        }catch (exception: IOException){
-            val errorMessage = exception.localizedMessage ?: STANDARD_ERROR
-            _statusLiveData.postValue(Error(errorMessage))
-        }
-    }
-
-    suspend fun deleteNoteById(id: Int){
+    suspend fun deleteNoteById(id: String){
         _statusLiveData.postValue(Loading())
 
         try {
