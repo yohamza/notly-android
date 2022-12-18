@@ -1,11 +1,13 @@
 package io.notly.android
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,11 +34,11 @@ class NotesListingFragment : Fragment(), NotesAdapter.NoteClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setFragmentResultListener("note_added") { requestKey, bundle ->
-            val note: Note = Gson().fromJson(bundle.getString(Constants.NOTE), Note::class.java)
-            notesList.add(note)
-            notesAdapter.notifyItemInserted(notesList.size-1)
-        }
+//        setFragmentResultListener("note_added") { requestKey, bundle ->
+//            val note: Note = Gson().fromJson(bundle.getString(Constants.NOTE), Note::class.java)
+//            notesList.add(note)
+//            notesAdapter.notifyItemInserted(notesList.size-1)
+//        }
     }
 
     override fun onCreateView(
@@ -68,6 +70,7 @@ class NotesListingFragment : Fragment(), NotesAdapter.NoteClickListener {
         notesViewModel.getNotes()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun bindObservers() {
         notesViewModel.notesListLiveData.observe(viewLifecycleOwner) {
             binding.swipeToRefresh.isRefreshing = false
@@ -94,30 +97,13 @@ class NotesListingFragment : Fragment(), NotesAdapter.NoteClickListener {
             }
 
         }
-
-//        //Observe if note was added, updated or deleted
-//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("note_added")
-//            ?.observe(viewLifecycleOwner) {
-////                Log.d(TAG, "noted added with title: ${it.title}")
-//                Log.d(TAG, "noted added with title:")
-//            }
-//
-//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("note_updated")
-//            ?.observe(viewLifecycleOwner) {
-////                Log.d(TAG, "noted updated with title: ${it.title}")
-//                Log.d(TAG, "noted updated with title: ")
-//            }
-//
-//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("note_deleted")
-//            ?.observe(viewLifecycleOwner) {
-////                Log.d(TAG, "note deleted $it")
-//                Log.d(TAG, "note deleted ")
-////                if(selectedNotePosition>-1){
-////                    notesList.removeAt(selectedNotePosition)
-////                    notesAdapter.notifyItemRemoved(selectedNotePosition)
-////                }
-//            }
     }
+
+//    private fun runGridLayoutAnimation() = binding.notesRv.apply {
+//        layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_animation)
+//        notesAdapter.notifyDataSetChanged()
+//        scheduleLayoutAnimation()
+//    }
 
     override fun onNoteClicked(position: Int) {
         val bundle = Bundle()
