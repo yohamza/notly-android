@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="io.notly.android.LoginFragment"
+        android:name="io.notly.android.features.auth.presentation.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="io.notly.android.RegisterFragment"
+        android:name="io.notly.android.features.auth.presentation.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/notesListingFragment"
-        android:name="io.notly.android.NotesListingFragment"
+        android:name="io.notly.android.features.note.presentation.notes.NotesListingFragment"
         android:label="fragment_notes_listing"
         tools:layout="@layout/fragment_notes_listing" >
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/addEditNoteFragment"
-        android:name="io.notly.android.AddEditNoteFragment"
+        android:name="io.notly.android.features.note.presentation.add_edit_delete_notes.AddEditNoteFragment"
         android:label="fragment_add_edit_note"
         tools:layout="@layout/fragment_add_edit_note" />
 </navigation>

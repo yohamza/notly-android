@@ -1,9 +1,8 @@
-package io.notly.android.api
+package io.notly.android.features.note.data.api
 
-import io.notly.android.models.Note
-import io.notly.android.models.NoteRequest
-import io.notly.android.models.NoteResponse
-import io.notly.android.models.NotesListResponse
+import io.notly.android.features.note.domain.model.Note
+import io.notly.android.features.note.domain.model.NoteResponse
+import io.notly.android.features.note.domain.model.NotesListResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -16,10 +15,10 @@ interface NotesAPI {
     suspend fun getNoteById(@Path("id") id: String) : Response<NoteResponse>
 
     @POST("/notes")
-    suspend fun createNote(@Body note: NoteRequest) : Response<NoteResponse>
+    suspend fun createNote(@Body note: Note) : Response<NoteResponse>
 
     @PUT("/notes/{id}")
-    suspend fun updateNote(@Path("id") id: String, @Body note: NoteRequest) : Response<NoteResponse>
+    suspend fun updateNote(@Path("id") id: String, @Body note: Note) : Response<NoteResponse>
 
     @DELETE("/notes/{id}")
     suspend fun deleteNoteById(@Path("id") id: String) : Response<NoteResponse>

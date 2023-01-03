@@ -1,12 +1,11 @@
-package io.notly.android
+package io.notly.android.features.note.presentation.notes
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.notly.android.databinding.NoteItemBinding
-import io.notly.android.models.Note
-import io.notly.android.models.NoteResponse
+import io.notly.android.features.note.domain.model.Note
 
 class NotesAdapter(private val notesList: List<Note>, private val onNoteClicked: (Int) -> Unit) :
     RecyclerView.Adapter<NotesAdapter.NoteVH>() {

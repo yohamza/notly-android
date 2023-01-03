@@ -23,4 +23,5 @@
     <string name="txt_description_hint">Write your description</string>
     <string name="txt_submit">Submit</string>
     <string name="add_note">Add Note</string>
+    <string name="no_internet">No internet connection available.</string>
 </resources>

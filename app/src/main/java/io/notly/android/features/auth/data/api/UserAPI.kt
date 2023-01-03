@@ -1,4 +1,4 @@
-package io.notly.android.api
+package io.notly.android.features.auth.data.api
 
 import io.notly.android.models.UserRequest
 import io.notly.android.models.UserResponse

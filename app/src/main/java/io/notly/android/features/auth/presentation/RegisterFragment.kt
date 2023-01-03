@@ -1,24 +1,25 @@
-package io.notly.android
+package io.notly.android.features.auth.presentation
 
 import android.os.Bundle
 import android.util.Patterns
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import io.notly.android.databinding.FragmentLoginBinding
+import io.notly.android.R
+import io.notly.android.core.NetworkResult
+import io.notly.android.databinding.FragmentRegisterBinding
 import io.notly.android.models.UserRequest
 import io.notly.android.utils.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoginBinding
+    private lateinit var binding: FragmentRegisterBinding
     private val authViewModel: AuthViewModel by viewModels()
 
     @Inject
@@ -28,22 +29,26 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
-        binding.goToSignup.setOnClickListener {
-                findNavController().popBackStack()
+        binding.goToSignin.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
-        binding.signInBtn.setOnClickListener {
+        //TODO: Implement this code on a splash screen
+        if(tokenManager.geToken() != null){
+            findNavController().navigate(R.id.action_registerFragment_to_notesListingFragment)
+        }
 
-            val userRequest = getUserRequest()
+        binding.signUpBtn.setOnClickListener {
 
-            val (valid, reason) = validateCredentials(userRequest.email, userRequest.password)
+            val (username, email, password) = getUserRequest()
+            val (valid, reason) = validateCredentials(username!!, email, password)
 
             it.hideKeyboard()
 
             if(valid){
-                authViewModel.loginUser(UserRequest("", userRequest.email, userRequest.password))
+                authViewModel.registerUser(UserRequest(username, email, password))
             }
             else{
                 it.snack(reason)
@@ -54,9 +59,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun getUserRequest(): UserRequest{
+        val username = binding.usernameEt.text.toString().trim()
         val email = binding.emailEt.text.toString().trim()
         val password = binding.passwordEt.text.toString().trim()
-        return UserRequest(null, email, password)
+        return UserRequest(username, email, password)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,10 +74,10 @@ class LoginFragment : Fragment() {
             when(it){
                 is NetworkResult.Success -> {
                     tokenManager.saveToken(it.data!!.token)
-                    findNavController().navigate(R.id.action_loginFragment_to_notesListingFragment)
+                    findNavController().navigate(R.id.action_registerFragment_to_notesListingFragment)
                 }
                 is NetworkResult.Error -> {
-                    binding.signInBtn.snack(it.message!!)
+                    binding.signUpBtn.snack(it.message!!)
                 }
                 is NetworkResult.Loading -> {
                     binding.progress.show()
@@ -80,9 +86,9 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun validateCredentials(email: String, password: String): Pair<Boolean, String>{
+    private fun validateCredentials(username: String, email: String, password: String): Pair<Boolean, String>{
         var pair = Pair(true, "")
-        if(email.isEmpty() || password.isEmpty()){
+        if(username.isEmpty() || email.isEmpty() || password.isEmpty()){
             pair = Pair(false, "Please fill all fields to continue")
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -94,4 +100,5 @@ class LoginFragment : Fragment() {
 
         return pair
     }
+
 }

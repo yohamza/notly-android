@@ -75,7 +75,14 @@ dependencies {
     def lottieVersion = "5.0.3"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
-    //----------- SwipeRefresh
+    //------Room
+//    def roomVersion = "2.4.3"
+//    implementation "androidx.room:room-runtime:$roomVersion"
+//    kapt "androidx.room:room-compiler:$roomVersion"
+//    implementation "androidx.room:room-ktx:$roomVersion"
+    // Kotlin Extensions and Coroutines support for Room
+
+    //------SwipeRefresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //------Test Dependencies

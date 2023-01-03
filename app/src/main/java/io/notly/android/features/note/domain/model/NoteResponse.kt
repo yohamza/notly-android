@@ -1,4 +1,4 @@
-package io.notly.android.models
+package io.notly.android.features.note.domain.model
 
 import com.google.gson.annotations.SerializedName
 
