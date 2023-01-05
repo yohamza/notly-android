@@ -9,6 +9,12 @@ import dagger.hilt.components.SingletonComponent
 import io.notly.android.features.auth.data.api.AuthInterceptor
 import io.notly.android.features.note.data.api.NotesAPI
 import io.notly.android.features.auth.data.api.UserAPI
+import io.notly.android.features.auth.data.data_source.AuthRemoteDataSource
+import io.notly.android.features.auth.data.repository.AuthRepositoryImpl
+import io.notly.android.features.auth.domain.repository.AuthRepository
+import io.notly.android.features.auth.domain.use_case.LoginUser
+import io.notly.android.features.auth.domain.use_case.RegisterUser
+import io.notly.android.features.auth.domain.use_case.AuthUseCases
 import io.notly.android.features.note.data.data_source.NoteRemoteDataSource
 import io.notly.android.features.note.data.repository.NoteRepositoryImpl
 import io.notly.android.features.note.domain.repository.NoteRepository
@@ -91,12 +97,30 @@ class NetworkModule {
 
     @Singleton
     @Provides
+    fun providesAuthRepository(remoteDataSource: AuthRemoteDataSource, externalScope: CoroutineScope): AuthRepository {
+        return AuthRepositoryImpl(
+            remoteDataSource,
+            externalScope
+        )
+    }
+
+    @Singleton
+    @Provides
     fun providesNoteUseCases(noteRepository: NoteRepository): NoteUseCases {
         return NoteUseCases(
             GetNotes(noteRepository),
             UpdateNote(noteRepository),
             CreateNote(noteRepository),
             DeleteNoteById(noteRepository)
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun providesUserUseCases(authRepository: AuthRepository): AuthUseCases {
+        return AuthUseCases(
+            LoginUser(authRepository),
+            RegisterUser(authRepository)
         )
     }
 

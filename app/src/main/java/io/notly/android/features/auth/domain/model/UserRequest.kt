@@ -1,4 +1,4 @@
-package io.notly.android.models
+package io.notly.android.features.auth.domain.model
 
 data class UserRequest(
     val username: String?,

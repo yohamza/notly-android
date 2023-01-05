@@ -7,13 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.notly.android.R
 import io.notly.android.core.NetworkResult
 import io.notly.android.databinding.FragmentRegisterBinding
-import io.notly.android.models.UserRequest
+import io.notly.android.features.auth.domain.model.UserRequest
 import io.notly.android.utils.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,7 +37,6 @@ class RegisterFragment : Fragment() {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
-        //TODO: Implement this code on a splash screen
         if(tokenManager.geToken() != null){
             findNavController().navigate(R.id.action_registerFragment_to_notesListingFragment)
         }
@@ -48,7 +49,7 @@ class RegisterFragment : Fragment() {
             it.hideKeyboard()
 
             if(valid){
-                authViewModel.registerUser(UserRequest(username, email, password))
+                observeApiResult(UserRequest(username, email, password))
             }
             else{
                 it.snack(reason)
@@ -58,29 +59,33 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
-    private fun getUserRequest(): UserRequest{
+    private fun getUserRequest(): UserRequest {
         val username = binding.usernameEt.text.toString().trim()
         val email = binding.emailEt.text.toString().trim()
         val password = binding.passwordEt.text.toString().trim()
         return UserRequest(username, email, password)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        authViewModel.userResponseLiveData.observe(viewLifecycleOwner) {
-
-            binding.progress.hide()
-
-            when(it){
-                is NetworkResult.Success -> {
-                    tokenManager.saveToken(it.data!!.token)
-                    findNavController().navigate(R.id.action_registerFragment_to_notesListingFragment)
-                }
-                is NetworkResult.Error -> {
-                    binding.signUpBtn.snack(it.message!!)
-                }
-                is NetworkResult.Loading -> {
-                    binding.progress.show()
+    private fun observeApiResult(userRequest: UserRequest){
+        this.lifecycleScope.launch{
+            authViewModel.apply {
+                registerUser(userRequest)
+                uiState.collect{
+                    if(!it.isLoading){
+                        binding.progress.hide()
+                        if(it.errorMessage.isEmpty()){
+                            /**If loading has ended and there is no error than save token
+                            to local storage and navigate to next screen**/
+                            it.user?.token?.let { token -> tokenManager.saveToken(token) }
+                            findNavController().navigate(R.id.action_registerFragment_to_notesListingFragment)
+                        }
+                        else{
+                            binding.signUpBtn.snack(it.errorMessage)
+                        }
+                    }
+                    else{
+                        binding.progress.show()
+                    }
                 }
             }
         }

@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.notly.android.R
 import io.notly.android.core.NetworkResult
 import io.notly.android.databinding.FragmentLoginBinding
-import io.notly.android.models.UserRequest
+import io.notly.android.features.auth.domain.model.UserRequest
 import io.notly.android.utils.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,7 +47,7 @@ class LoginFragment : Fragment() {
             it.hideKeyboard()
 
             if(valid){
-                authViewModel.loginUser(UserRequest("", userRequest.email, userRequest.password))
+                observeApiResult(UserRequest("", userRequest.email, userRequest.password))
             }
             else{
                 it.snack(reason)
@@ -54,31 +57,37 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    private fun getUserRequest(): UserRequest{
+    private fun getUserRequest(): UserRequest {
         val email = binding.emailEt.text.toString().trim()
         val password = binding.passwordEt.text.toString().trim()
         return UserRequest(null, email, password)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        authViewModel.userResponseLiveData.observe(viewLifecycleOwner) {
+    private fun observeApiResult(userRequest: UserRequest){
 
-            binding.progress.hide()
-
-            when(it){
-                is NetworkResult.Success -> {
-                    tokenManager.saveToken(it.data!!.token)
-                    findNavController().navigate(R.id.action_loginFragment_to_notesListingFragment)
-                }
-                is NetworkResult.Error -> {
-                    binding.signInBtn.snack(it.message!!)
-                }
-                is NetworkResult.Loading -> {
-                    binding.progress.show()
+        this.lifecycleScope.launch{
+            authViewModel.apply {
+                loginUser(userRequest)
+                uiState.collect{
+                    if(!it.isLoading){
+                        binding.progress.hide()
+                        if(it.errorMessage.isEmpty()){
+                            /**If loading has ended and there is no error than save token
+                            to local storage and navigate to next screen**/
+                            it.user?.token?.let { token -> tokenManager.saveToken(token) }
+                            findNavController().navigate(R.id.action_loginFragment_to_notesListingFragment)
+                        }
+                        else{
+                            binding.signInBtn.snack(it.errorMessage)
+                        }
+                    }
+                    else{
+                        binding.progress.show()
+                    }
                 }
             }
         }
+
     }
 
     private fun validateCredentials(email: String, password: String): Pair<Boolean, String>{

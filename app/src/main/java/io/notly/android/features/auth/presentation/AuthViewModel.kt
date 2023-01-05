@@ -1,31 +1,89 @@
 package io.notly.android.features.auth.presentation
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.notly.android.models.UserRequest
-import io.notly.android.models.UserResponse
-import io.notly.android.repository.UserRepository
+import io.notly.android.features.auth.domain.model.UserRequest
 import io.notly.android.core.NetworkResult
+import io.notly.android.features.auth.domain.use_case.AuthUseCases
+import io.notly.android.features.auth.presentation.ui_state.AuthUiState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(private val userRepository: UserRepository): ViewModel() {
+class AuthViewModel @Inject constructor(private val authUseCases: AuthUseCases): ViewModel() {
 
-    val userResponseLiveData: LiveData<NetworkResult<UserResponse>>
-    get() = userRepository.userResponseLiveData
+    private var _uiState = MutableStateFlow(AuthUiState())
+    val uiState get() = _uiState
+
+    private var loginUser: Job? = null
+    private var registerUser: Job? = null
 
     fun registerUser(userRequest: UserRequest){
-        viewModelScope.launch {
-            userRepository.registerUser(userRequest)
+        registerUser?.cancel()
+
+        registerUser = viewModelScope.launch {
+            val result = authUseCases.registerUser(userRequest)
+            _uiState.update { it.copy(isLoading = true) }
+
+            when(result){
+                is NetworkResult.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            user = result.data,
+                            errorMessage = ""
+                        )
+                    }
+                }
+                is NetworkResult.Loading -> {
+                    _uiState.update { it.copy(isLoading = true) }
+                }
+                is NetworkResult.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = result.message ?: "Something went wrong"
+                        )
+                    }
+                }
+            }
         }
     }
 
     fun loginUser(userRequest: UserRequest){
-        viewModelScope.launch {
-            userRepository.loginUser(userRequest)
+
+        loginUser?.cancel()
+
+        loginUser = viewModelScope.launch {
+            val result = authUseCases.loginUser(userRequest)
+            _uiState.update { it.copy(isLoading = true) }
+
+            when(result){
+                is NetworkResult.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            user = result.data,
+                            errorMessage = ""
+                        )
+                    }
+                }
+                is NetworkResult.Loading -> {
+                    _uiState.update { it.copy(isLoading = true) }
+                }
+                is NetworkResult.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = result.message ?: "Something went wrong"
+                        )
+                    }
+                }
+            }
         }
 
     }
