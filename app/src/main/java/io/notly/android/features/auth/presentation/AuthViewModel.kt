@@ -9,6 +9,7 @@ import io.notly.android.features.auth.domain.use_case.AuthUseCases
 import io.notly.android.features.auth.presentation.ui_state.AuthUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(private val authUseCases: AuthUseCases): ViewModel() {
 
     private var _uiState = MutableStateFlow(AuthUiState())
-    val uiState get() = _uiState
+    val uiState: StateFlow<AuthUiState> get() = _uiState
 
     private var loginUser: Job? = null
     private var registerUser: Job? = null

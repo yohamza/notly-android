@@ -49,7 +49,7 @@ class RegisterFragment : Fragment() {
             it.hideKeyboard()
 
             if(valid){
-                observeApiResult(UserRequest(username, email, password))
+                authViewModel.registerUser(UserRequest(username, email, password))
             }
             else{
                 it.snack(reason)
@@ -59,6 +59,11 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeApiResult()
+    }
+
     private fun getUserRequest(): UserRequest {
         val username = binding.usernameEt.text.toString().trim()
         val email = binding.emailEt.text.toString().trim()
@@ -66,21 +71,20 @@ class RegisterFragment : Fragment() {
         return UserRequest(username, email, password)
     }
 
-    private fun observeApiResult(userRequest: UserRequest){
+    private fun observeApiResult(){
         this.lifecycleScope.launch{
             authViewModel.apply {
-                registerUser(userRequest)
                 uiState.collect{
                     if(!it.isLoading){
                         binding.progress.hide()
-                        if(it.errorMessage.isEmpty()){
+                        if(!it.user?.token.isNullOrEmpty()){
                             /**If loading has ended and there is no error than save token
                             to local storage and navigate to next screen**/
                             it.user?.token?.let { token -> tokenManager.saveToken(token) }
                             findNavController().navigate(R.id.action_registerFragment_to_notesListingFragment)
                         }
                         else{
-                            binding.signUpBtn.snack(it.errorMessage)
+                            if(!it.errorMessage.isNullOrEmpty()) binding.signUpBtn.snack(it.errorMessage)
                         }
                     }
                     else{

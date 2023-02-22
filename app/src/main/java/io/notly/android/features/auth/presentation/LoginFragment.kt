@@ -16,6 +16,7 @@ import io.notly.android.databinding.FragmentLoginBinding
 import io.notly.android.features.auth.domain.model.UserRequest
 import io.notly.android.utils.*
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,7 +48,7 @@ class LoginFragment : Fragment() {
             it.hideKeyboard()
 
             if(valid){
-                observeApiResult(UserRequest("", userRequest.email, userRequest.password))
+                authViewModel.loginUser(userRequest)
             }
             else{
                 it.snack(reason)
@@ -57,28 +58,34 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        observeApiResult()
+
+    }
+
     private fun getUserRequest(): UserRequest {
         val email = binding.emailEt.text.toString().trim()
         val password = binding.passwordEt.text.toString().trim()
         return UserRequest(null, email, password)
     }
 
-    private fun observeApiResult(userRequest: UserRequest){
+    private fun observeApiResult(){
 
         this.lifecycleScope.launch{
             authViewModel.apply {
-                loginUser(userRequest)
                 uiState.collect{
                     if(!it.isLoading){
                         binding.progress.hide()
-                        if(it.errorMessage.isEmpty()){
+                        if(!it.user?.token.isNullOrEmpty()){
                             /**If loading has ended and there is no error than save token
                             to local storage and navigate to next screen**/
                             it.user?.token?.let { token -> tokenManager.saveToken(token) }
                             findNavController().navigate(R.id.action_loginFragment_to_notesListingFragment)
                         }
                         else{
-                            binding.signInBtn.snack(it.errorMessage)
+                            if(!it.errorMessage.isNullOrEmpty()) binding.signInBtn.snack(it.errorMessage)
                         }
                     }
                     else{
