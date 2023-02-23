@@ -1,10 +1,14 @@
 package io.notly.android.features.note.presentation.add_edit_delete_notes
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -23,6 +27,7 @@ class AddEditNoteFragment : Fragment() {
     private val noteViewModel: AddEditNoteViewModel by viewModels()
     private var note: Note? = null
     private var isAdd = true
+    private var didChange = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,39 +35,27 @@ class AddEditNoteFragment : Fragment() {
     ): View? {
         binding = FragmentAddEditNoteBinding.inflate(inflater, container, false)
 
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initialize()
+        initializeScreenBehavior()
+        initListeners()
 
-        binding.heading.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        binding.deleteNoteBtn.setOnClickListener {
-            note?.let {
-                it._id?.let { id ->
-                    deleteNote(id)
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if(!didChange){
+                    isEnabled = false
+                    activity?.onBackPressedDispatcher?.onBackPressed()
                 }
-            }
-        }
 
-        binding.saveBtn.setOnClickListener {
-            val title = binding.titleEt.text.toString().trim()
-            val description = binding.descriptionEt.text.toString().trim()
-            val noteReq = Note(title = title, description = description)
-            if (isAdd) {
-                createNote(noteReq)
-            } else {
-                note?._id?.let {
-                    updateNote(it, noteReq)
-                }
+                binding.saveBtn.performClick()
+
             }
-        }
+
+        })
 
     }
 
@@ -147,7 +140,66 @@ class AddEditNoteFragment : Fragment() {
         }
     }
 
-    private fun initialize() {
+    private fun initListeners(){
+
+        binding.heading.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.deleteNoteBtn.setOnClickListener {
+            note?.let {
+                it._id?.let { id ->
+                    deleteNote(id)
+                }
+            }
+        }
+
+        binding.titleEt.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.saveBtn.show()
+                if(!didChange) didChange = true
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
+        binding.descriptionEt.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.saveBtn.show()
+                if(!didChange) didChange = true
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
+        binding.saveBtn.setOnClickListener {
+            val title = binding.titleEt.text.toString().trim()
+            val description = binding.descriptionEt.text.toString().trim()
+            val noteReq = Note(title = title, description = description)
+            if (isAdd) {
+                createNote(noteReq)
+            } else {
+                note?._id?.let {
+                    updateNote(it, noteReq)
+                }
+            }
+        }
+
+    }
+
+    private fun initializeScreenBehavior() {
         val args = arguments?.getString(Constants.NOTE)
 
         args?.also {

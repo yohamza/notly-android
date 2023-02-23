@@ -77,7 +77,6 @@
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/white</item>
-        <item name="textAllCaps">true</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
@@ -94,8 +93,7 @@
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">@dimen/button_text_size</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
