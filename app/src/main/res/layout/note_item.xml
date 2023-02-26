@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="15dp"
+    android:padding="10dp"
     android:layout_margin="5dp"
     android:foreground="?attr/selectableItemBackground"
     android:background="@drawable/note_background">
@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="This is title note"
-        style="@style/TextStyle.h4"
+        style="@style/TextStyle.h5"
         android:textColor="@color/textBlue"
         android:id="@+id/title"/>
 

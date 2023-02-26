@@ -1,11 +1,13 @@
 package io.notly.android.features.auth.presentation
 
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -23,6 +25,7 @@ class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
     private val authViewModel: AuthViewModel by viewModels()
+    private var passwordHidden = true
 
     @Inject
     lateinit var tokenManager: TokenManager
@@ -54,6 +57,23 @@ class RegisterFragment : Fragment() {
             else{
                 it.snack(reason)
             }
+        }
+
+        binding.passwordShow.setOnClickListener {
+
+            if(passwordHidden){
+                passwordHidden = false
+                binding.passwordShow.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_eye_off))
+                binding.passwordEt.transformationMethod = null
+                binding.passwordEt.setSelection(binding.passwordEt.text.length)
+            }
+            else{
+                passwordHidden = true
+                binding.passwordShow.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_eye_open))
+                binding.passwordEt.transformationMethod = PasswordTransformationMethod()
+                binding.passwordEt.setSelection(binding.passwordEt.text.length)
+            }
+
         }
 
         return binding.root

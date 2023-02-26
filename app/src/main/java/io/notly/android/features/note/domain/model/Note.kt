@@ -11,15 +11,6 @@ data class Note(
     val updatedAt: String? = null,
     val userId: String? = null
 ) {
-//    constructor(title: String, description: String) : this(
-//        -1,
-//        "-1",
-//        "12345",
-//        title,
-//        description,
-//        "12345",
-//        "123"
-//    )
 
     companion object {
         val noteColors =

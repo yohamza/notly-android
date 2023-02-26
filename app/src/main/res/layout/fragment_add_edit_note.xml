@@ -5,24 +5,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="10dp"
+    android:paddingHorizontal="10dp"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/heading"
-        style="@style/TextStyle.h3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/backBtn"
+        android:elevation="1dp"
         android:layout_marginTop="10dp"
-        android:drawableStart="@drawable/ic_back"
-        app:drawableTint="@color/colorPrimary"
-        android:drawablePadding="5dp"
-        android:paddingVertical="5dp"
-        android:textColor="@color/colorPrimary"
-        android:text="Add Note"
-        android:visibility="visible"
+        android:background="@drawable/circle_bg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_back" />
+
+    </RelativeLayout>
 
     <ProgressBar
         android:layout_width="24dp"
@@ -34,30 +38,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <Button
+    <TextView
         android:id="@+id/saveBtn"
-        style="@style/PrimaryButton"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="Save"
-        android:visibility="gone"
+        style="@style/TextStyle.poppinsRegular"
         android:textAllCaps="false"
-        app:layout_constraintTop_toTopOf="@id/heading"
-        app:layout_constraintBottom_toBottomOf="@id/heading"
+        android:gravity="center"
+        android:paddingHorizontal="25dp"
+        android:paddingVertical="7dp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="5dp"
+        android:visibility="gone"
+        android:background="@drawable/primary_button"
+        app:layout_constraintTop_toTopOf="@id/backBtn"
+        app:layout_constraintBottom_toBottomOf="@id/backBtn"
         app:layout_constraintEnd_toStartOf="@id/deleteNoteBtn"/>
 
-    <ImageView
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+    <RelativeLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:id="@+id/deleteNoteBtn"
-        android:src="@drawable/ic_delete"
-        android:paddingHorizontal="5dp"
-        android:paddingVertical="10dp"
+        android:elevation="1dp"
         android:visibility="gone"
-        app:tint="@color/cancel_red"
+        android:background="@drawable/circle_bg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/heading"
-        app:layout_constraintBottom_toBottomOf="@id/heading"/>
+        app:layout_constraintTop_toTopOf="@id/backBtn"
+        app:layout_constraintBottom_toBottomOf="@id/backBtn">
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:id="@+id/deleteNoteImg"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_delete"
+        app:tint="@color/cancel_red" />
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/title_et"
@@ -65,24 +83,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
         android:background="@null"
         android:hint="Title"
         android:paddingVertical="10dp"
-        app:layout_constraintStart_toStartOf="@id/heading"
-        app:layout_constraintTop_toBottomOf="@id/heading" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backBtn" />
 
     <EditText
         android:id="@+id/description_et"
         style="@style/TextStyle.poppinsRegular"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content"
+        android:minLines="5"
+        android:layout_marginTop="5dp"
         android:background="@null"
         android:gravity="top"
         android:hint="Description"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/title_et"
         app:layout_constraintTop_toBottomOf="@id/title_et" />
 

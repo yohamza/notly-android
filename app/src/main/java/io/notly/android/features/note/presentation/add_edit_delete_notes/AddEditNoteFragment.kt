@@ -44,18 +44,20 @@ class AddEditNoteFragment : Fragment() {
         initializeScreenBehavior()
         initListeners()
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if(!didChange){
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+
+                    //Default behaviour of onBackPressed
                     isEnabled = false
                     activity?.onBackPressedDispatcher?.onBackPressed()
+
+                    //binding.saveBtn.performClick()
+
                 }
 
-                binding.saveBtn.performClick()
-
-            }
-
-        })
+            })
 
     }
 
@@ -140,10 +142,13 @@ class AddEditNoteFragment : Fragment() {
         }
     }
 
-    private fun initListeners(){
+    private fun initListeners() {
 
-        binding.heading.setOnClickListener {
-            findNavController().popBackStack()
+        binding.backBtn.setOnClickListener {
+            if (didChange)
+                binding.saveBtn.performClick()
+            else
+                findNavController().popBackStack()
         }
 
         binding.deleteNoteBtn.setOnClickListener {
@@ -154,14 +159,14 @@ class AddEditNoteFragment : Fragment() {
             }
         }
 
-        binding.titleEt.addTextChangedListener(object : TextWatcher{
+        binding.titleEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 binding.saveBtn.show()
-                if(!didChange) didChange = true
+                if (!didChange) didChange = true
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -169,14 +174,14 @@ class AddEditNoteFragment : Fragment() {
             }
         })
 
-        binding.descriptionEt.addTextChangedListener(object : TextWatcher{
+        binding.descriptionEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 binding.saveBtn.show()
-                if(!didChange) didChange = true
+                if (!didChange) didChange = true
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -186,6 +191,13 @@ class AddEditNoteFragment : Fragment() {
 
         binding.saveBtn.setOnClickListener {
             val title = binding.titleEt.text.toString().trim()
+
+            if(title.isEmpty()) {
+                it.hideKeyboard()
+                it.snack("Title can't be empty")
+                return@setOnClickListener
+            }
+
             val description = binding.descriptionEt.text.toString().trim()
             val noteReq = Note(title = title, description = description)
             if (isAdd) {
@@ -205,15 +217,13 @@ class AddEditNoteFragment : Fragment() {
         args?.also {
             isAdd = false
             note = Gson().fromJson(it, Note::class.java)
-            binding.heading.text = "Edit Note"
             binding.deleteNoteBtn.show()
             binding.saveBtn.text = "Update"
-            binding.titleEt.setText(note!!.title)
-            binding.descriptionEt.setText(note!!.description)
+            if(!note!!.title.isNullOrEmpty()) binding.titleEt.setText(note!!.title)
+            if(!note!!.description.isNullOrEmpty()) binding.descriptionEt.setText(note!!.description)
 
         } ?: kotlin.run {
             isAdd = true
-            binding.heading.text = "Add Note"
             binding.deleteNoteBtn.hide()
             binding.saveBtn.text = "Create"
 

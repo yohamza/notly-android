@@ -26,16 +26,18 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:id="@+id/title"
+                    android:includeFontPadding="false"
                     android:textColor="@color/colorPrimary"
-                    style="@style/TextStyle.h1"
+                    style="@style/TextStyle.h2"
                     android:text="Notly" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/subTitle"
-                    android:text="Your notes"
-                    style="@style/TextStyle.h5"
+                    android:text="My Notes"
+                    android:includeFontPadding="false"
+                    style="@style/TextStyle.body1"
                     android:layout_marginStart="10dp"
                     android:layout_below="@id/title"/>
 
@@ -96,7 +98,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/primary_button"
         android:fontFamily="@font/poppins_medium"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:id="@+id/createBtn"
         android:textColor="@color/white"
         android:textAllCaps="false"
